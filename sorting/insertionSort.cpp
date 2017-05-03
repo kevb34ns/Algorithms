@@ -1,4 +1,4 @@
-void sort(int* array, int size)
+void insertionSort(int* array, int size)
 {
    for (int i = 1; i < size; i++)
    {
