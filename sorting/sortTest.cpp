@@ -5,12 +5,14 @@
 #include "selectionSort.cpp"
 #include "bubbleSort.cpp"
 #include "insertionSort.cpp"
+#include "mergeSort.cpp"
 
 enum SortType
 {
    selection,
    bubble,
-   insertion
+   insertion,
+   merger
 };
 
 void print(int* array, int size)
@@ -34,7 +36,7 @@ int main(int argc, char** argv)
    int N = 100;
    int LIMIT = 1000;
    bool isPrintEnabled = false;
-   SortType type = selection;
+   SortType type = merger;
 
    const char* helpString = "USAGE: bin/sortTest [OPTIONS]\n \
       OPTIONS:\n \
@@ -42,6 +44,7 @@ int main(int argc, char** argv)
       -s : use selection sort\n \
       -b : use bubble sort\n \
       -i : use insertion sort\n \
+      -m : use merge sort\n \
       -p : print sorted list\n \
       -h : show usage";
 
@@ -62,6 +65,9 @@ int main(int argc, char** argv)
                break;
             case 'i':
                type = insertion;
+               break;
+            case 'm':
+               type = merger;
                break;
             case 'p':
                isPrintEnabled = true;
@@ -87,6 +93,7 @@ int main(int argc, char** argv)
       case selection: selectionSort(array, N); break;
       case bubble: bubbleSort(array, N); break;
       case insertion: insertionSort(array, N); break;
+      case merger: mergeSort(array, 0, N); break;
       default: delete[] array; return -1;
    }
 

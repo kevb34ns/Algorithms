@@ -13,7 +13,7 @@ $(OBJS_DIR)/n-queens.o: n-queens/n-queens.cpp $(OBJS_DIR)/.dirstamp
 $(BIN_DIR)/n-queens: $(OBJS_DIR)/n-queens.o $(BIN_DIR)/.dirstamp
 	$(CC) $< -o $@ $(CXXFLAGS)
 
-$(OBJS_DIR)/sortTest.o: sorting/sortTest.cpp sorting/selectionSort.cpp sorting/bubbleSort.cpp sorting/insertionSort.cpp $(OBJS_DIR)/.dirstamp
+$(OBJS_DIR)/sortTest.o: sorting/sortTest.cpp sorting/selectionSort.cpp sorting/bubbleSort.cpp sorting/insertionSort.cpp sorting/mergeSort.cpp $(OBJS_DIR)/.dirstamp
 	$(CC) -c $< -o $@ $(CXXFLAGS) -Isorting
 
 $(BIN_DIR)/sortTest: $(OBJS_DIR)/sortTest.o $(BIN_DIR)/.dirstamp
