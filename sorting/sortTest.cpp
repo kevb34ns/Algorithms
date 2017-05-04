@@ -88,6 +88,8 @@ int main(int argc, char** argv)
       array[i] = rand() % LIMIT + 1;
    }
 
+   clock_t startTime = clock();
+
    switch (type)
    {
       case selection: selectionSort(array, N); break;
@@ -96,6 +98,9 @@ int main(int argc, char** argv)
       case merger: mergeSort(array, 0, N); break;
       default: delete[] array; return -1;
    }
+
+   double ticks = clock() - startTime;
+   double duration = ticks / (double) CLOCKS_PER_SEC;
 
    bool sorted = true;
    for(int i = 0; i < N - 1; i++)
@@ -122,6 +127,8 @@ int main(int argc, char** argv)
    {
       std::cout << "RESULT: List is sorted incorrectly." << std::endl;
    }
+
+   std::cout << "Time: " << duration << " seconds." << std::endl;
 
    delete[] array;
 
