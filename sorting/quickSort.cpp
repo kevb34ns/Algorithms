@@ -1,5 +1,3 @@
-#include "insertionSort.cpp"
-
 void swap(int& a, int& b)
 {
 	int temp = a;
@@ -33,17 +31,42 @@ int partition(int* array, int begin, int end, int pivotIndex)
 	swap(array[pivotIndex], array[end - 1]);
 	pivotIndex = end - 1;
 	int fromLeft = begin, fromRight = pivotIndex - 1;
-	
+	while (true)
+	{
+		while (array[fromLeft] < array[pivotIndex])
+		{
+			fromLeft++;
+		}
+
+		while (array[fromRight] > array[pivotIndex])
+		{
+			fromRight--;
+		}
+
+		if (fromLeft < fromRight)
+		{
+			swap(array[fromLeft], array[fromRight]);
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	swap(array[fromLeft], array[pivotIndex]);
+	pivotIndex = fromLeft;
+	return pivotIndex;
 }
 
 void quickSort(int* array, int begin, int end)
 {
-	// find pivot
-	// partition about pivot
-	// call quicksort on each section
-	if (end - begin < 4)
+	int segmentSize = end - begin;
+	if (segmentSize < 4)
 	{
-		//TODO insertionSort, what about end-begin is 0 or neg
+		if (segmentSize > 1)
+		{
+			insertionSort(array, begin, end);
+		}
 		return;
 	}
 

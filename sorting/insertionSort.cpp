@@ -1,8 +1,8 @@
-void insertionSort(int* array, int size)
+void insertionSort(int* array, int begin, int end)
 {
-   for (int i = 1; i < size; i++)
+   for (int i = begin + 1; i < end; i++)
    {
-      for (int j = 0; j < i; j++)
+      for (int j = begin; j < i; j++)
       {
          if (array[i] <= array[j])
          {

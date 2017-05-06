@@ -1,10 +1,10 @@
-void bubbleSort(int* array, int size)
+void bubbleSort(int* array, int begin, int end)
 {
-   for (int i = size - 1; i > 0; i--)
+   for (int i = end - 1; i > begin; i--)
    {
       bool sorted = true;
       
-      for (int j = 0; j < i; j++)
+      for (int j = begin; j < i; j++)
       {
          if (array[j] > array[j + 1])
          {

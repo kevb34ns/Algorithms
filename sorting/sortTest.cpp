@@ -98,9 +98,9 @@ int main(int argc, char** argv)
 
    switch (type)
    {
-      case selection: selectionSort(array, N); break;
-      case bubble: bubbleSort(array, N); break;
-      case insertion: insertionSort(array, N); break;
+      case selection: selectionSort(array, 0, N); break;
+      case bubble: bubbleSort(array, 0, N); break;
+      case insertion: insertionSort(array, 0, N); break;
       case merger: mergeSort(array, 0, N); break;
       case quick: quickSort(array, 0, N); break;
       default: delete[] array; return -1;

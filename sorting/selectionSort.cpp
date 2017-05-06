@@ -1,10 +1,10 @@
-void selectionSort(int* array, int size)
+void selectionSort(int* array, int begin, int end)
 {
-   for (int i = size - 1; i > 0; i--)
+   for (int i = end - 1; i > begin; i--)
    {
-      int maxPos = 0;
+      int maxPos = begin;
 
-      for (int j = 1; j <= i; j++)
+      for (int j = begin + 1; j <= i; j++)
       {
          if (array[j] > array[maxPos])
          {
