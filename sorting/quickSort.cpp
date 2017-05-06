@@ -5,6 +5,10 @@ void swap(int& a, int& b)
 	b = temp;
 }
 
+/**
+ * Finds the pivot by sorting the first, middle, and last items in the
+ * array, and returning the median of the three items as the pivot.
+ */
 int findPivotIndex(int* array, int begin, int end)
 {
 	int mid = begin + (end - begin) / 2;
@@ -25,6 +29,11 @@ int findPivotIndex(int* array, int begin, int end)
 	return mid;
 }
 
+/**
+ * Partitions the array around the pivot. This function is only made to work
+ * with pivots chosen using the median-of-three method described above, and
+ * must be re-written if using a different method.
+ */
 int partition(int* array, int begin, int end, int pivotIndex)
 {
 	// swap pivot to the end to get it out of the way
@@ -63,16 +72,20 @@ int partition(int* array, int begin, int end, int pivotIndex)
 void quickSort(int* array, int begin, int end)
 {
 	int segmentSize = end - begin;
+	int pivotIndex = -1;
+	if (segmentSize >= 3)
+	{
+		pivotIndex = findPivotIndex(array, begin, end);
+	}
+
 	if (segmentSize < 4)
 	{
-		if (segmentSize > 1)
+		if (segmentSize == 2 && array[begin] > array[begin + 1])
 		{
-			insertionSort(array, begin, end);
+			swap(array[begin], array[begin + 1]);
 		}
 		return;
 	}
-
-	int pivotIndex = findPivotIndex(array, begin, end);
 
 	pivotIndex = partition(array, begin, end, pivotIndex);
 
