@@ -6,13 +6,15 @@
 #include "bubbleSort.cpp"
 #include "insertionSort.cpp"
 #include "mergeSort.cpp"
+#include "quickSort.cpp"
 
 enum SortType
 {
    selection,
    bubble,
    insertion,
-   merger
+   merger,
+   quick
 };
 
 void print(int* array, int size)
@@ -45,6 +47,7 @@ int main(int argc, char** argv)
       -b : use bubble sort\n \
       -i : use insertion sort\n \
       -m : use merge sort\n \
+      -q : use quick sort\n \
       -p : print sorted list\n \
       -h : show usage";
 
@@ -68,6 +71,9 @@ int main(int argc, char** argv)
                break;
             case 'm':
                type = merger;
+               break;
+            case 'q':
+               type = quick;
                break;
             case 'p':
                isPrintEnabled = true;
@@ -96,6 +102,7 @@ int main(int argc, char** argv)
       case bubble: bubbleSort(array, N); break;
       case insertion: insertionSort(array, N); break;
       case merger: mergeSort(array, 0, N); break;
+      case quick: quickSort(array, 0, N); break;
       default: delete[] array; return -1;
    }
 
