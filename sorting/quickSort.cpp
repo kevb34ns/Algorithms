@@ -46,6 +46,8 @@ int partition(int* array, int begin, int end, int pivotIndex)
 		if (fromLeft < fromRight)
 		{
 			swap(array[fromLeft], array[fromRight]);
+			fromLeft++;
+			fromRight--;
 		}
 		else
 		{
