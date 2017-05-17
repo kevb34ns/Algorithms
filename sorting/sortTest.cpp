@@ -7,6 +7,7 @@
 #include "insertionSort.cpp"
 #include "mergeSort.cpp"
 #include "quickSort.cpp"
+#include "radixSort.cpp"
 
 enum SortType
 {
@@ -14,7 +15,8 @@ enum SortType
    bubble,
    insertion,
    merger,
-   quick
+   quick,
+   radix
 };
 
 void print(int* array, int size)
@@ -48,6 +50,7 @@ int main(int argc, char** argv)
       -i : use insertion sort\n \
       -m : use merge sort\n \
       -q : use quick sort\n \
+      -r : use radix sort\n \
       -p : print sorted list\n \
       -h : show usage";
 
@@ -74,6 +77,9 @@ int main(int argc, char** argv)
                break;
             case 'q':
                type = quick;
+               break;
+            case 'r':
+               type = radix;
                break;
             case 'p':
                isPrintEnabled = true;
@@ -103,6 +109,7 @@ int main(int argc, char** argv)
       case insertion: insertionSort(array, 0, N); break;
       case merger: mergeSort(array, 0, N); break;
       case quick: quickSort(array, 0, N); break;
+      case radix: radixSort(array, 0, N); break;
       default: delete[] array; return -1;
    }
 
