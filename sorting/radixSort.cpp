@@ -1,90 +1,70 @@
-#include <string>
-#include <cstdlib>
-#include <list>
+#include <cmath>
 
-std::string pad(const std::string& digitString, const unsigned int length)
+int findMax(const int* array, const int size)
 {
-   std::string result = "";
-   if (length <= digitString.length())
+   int max = array[0];
+   for (int i = 1; i < size; i++)
    {
-      result += digitString;
-      return result;
-   }
-
-   for (unsigned int i = 0; i < length - digitString.length(); i++)
-   {
-      result += "0";
-   }
-
-   result += digitString;
-   return result;
-}
-
-int toDigitArray(int* array, std::list<std::string>* digitList1, int size)
-{
-   unsigned int maxLength = 0;
-   std::list<std::string> tempList;
-   for (int i = 0; i < size; i++)
-   {
-      tempList.push_back(std::to_string(array[i]));
-      if (tempList.rbegin()->length() > maxLength)
+      if (array[i] > array[max])
       {
-         maxLength = tempList.rbegin()->length();
+         max = array[i];
       }
    }
 
-   std::list<std::string>::iterator iter;
-   for (iter = tempList.begin(); iter != tempList.end(); iter++)
-   {
-      digitList1->push_back(pad(*iter, maxLength));
-   }
-
-   return maxLength;
+   return max;
 }
 
-void toIntArray(int* array, std::list<std::string>* digitList1)
+unsigned int getNumDigits(const int num)
 {
-   std::list<std::string>::iterator iter;
-   int i = 0;
-   for (iter = digitList1->begin(); iter != digitList1->end(); iter++)
+   int exp = 1;
+   int i = 1;
+   while (true)
    {
-      array[i] = std::stoi(*iter, nullptr);
+      if ((num / exp) % 10 == 0)
+      {
+         return i;
+      }
+
+      exp *= 10;
       i++;
    }
 }
 
-void radixSort(int* array, int begin, int end)
+void swapInts(int& x, int& y)
 {
-   int size = end - begin;
-   std::list<std::string>* digitList1 = new std::list<std::string>();
-   int digitLength = toDigitArray(array, digitList1, size);
-   
-   std::list<std::string>* digitList2 = new std::list<std::string>();
-   for (int k = 0; k < digitLength; k++)
+   int temp = x;
+   x = y;
+   y = temp;
+}
+
+void radixSort(int* array, const int begin, const int end)
+{
+   const int size = end - begin;
+   const int numDigits = getNumDigits(findMax(array, size));
+
+   // radix sort divides the array into contiguous groups based on digit values
+   // groupIndices stores the ending index, exclusive, of each group
+   // for example, groupIndices[3] = 15 means that the last item in group 3 is
+   // at index 14
+   int groupIndices[10];
+   for (int i = 1; i <= numDigits; i++)
    {
+      int exp = std::pow(10, i - 1);
+
       for (int j = 0; j < 10; j++)
       {
-         std::list<std::string>::iterator iter = digitList1->begin();
-         while (iter != digitList1->end())
+         int openIndex = (j > 0) ? groupIndices[j - 1] : 0;
+         for (int k = 0; k < size; k++)
          {
-            if ((*iter)[digitLength - k - 1] == j + '0')
+            if ((array[k] / exp) % 10 == j)
             {
-               digitList2->push_back(*iter);
-               iter = digitList1->erase(iter);
-            }
-            else
-            {
-               ++iter;
-            }
+               // ERROR by swapping here you break the rule that the order is preserved within each group
+               // TODO need a second array of the same size that you place the groups in, then switch between each array, and in the end, make sure 'array' has the final sorted values
+               swapInts(array[k], array[openIndex]);
+               openIndex++;
+            } 
          }
+         groupIndices[j] = openIndex;
       }
-
-      std::list<std::string>* tempList = digitList1;
-      digitList1 = digitList2;
-      digitList2 = tempList;
    }
-
-   toIntArray(array, digitList1);
-   delete digitList1;
-   delete digitList2;
 }

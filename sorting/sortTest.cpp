@@ -62,6 +62,10 @@ int main(int argc, char** argv)
          {
             case 'n':
                N = atoi(argv[i + 1]);
+               if (N > 1000)
+               {
+                  LIMIT = N;
+               }
                break;
             case 's':
                type = selection;
@@ -121,7 +125,7 @@ int main(int argc, char** argv)
    {
       if (array[i] > array[i + 1])
       {
-         std::cout << "Sort error at index" << i << 
+         std::cout << "Sort error at index " << i << 
                ": " << array[i] << " > " << array[i + 1] 
                << std::endl;
          sorted = false;
