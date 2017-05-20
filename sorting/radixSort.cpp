@@ -5,7 +5,7 @@ int findMax(const int* array, const int size)
    int max = array[0];
    for (int i = 1; i < size; i++)
    {
-      if (array[i] > array[max])
+      if (array[i] > max)
       {
          max = array[i];
       }
@@ -14,27 +14,24 @@ int findMax(const int* array, const int size)
    return max;
 }
 
-unsigned int getNumDigits(const int num)
+unsigned int getNumDigits(int num)
 {
-   int exp = 1;
-   int i = 1;
-   while (true)
+   num = std::abs(num);
+   int numDigits = 0;
+   while (num)
    {
-      if ((num / exp) % 10 == 0)
-      {
-         return i;
-      }
-
-      exp *= 10;
-      i++;
+      num /= 10;
+      numDigits++;
    }
+   return numDigits;
 }
 
-void swapInts(int& x, int& y)
+void transferArrayData(int* from, int* to, int n)
 {
-   int temp = x;
-   x = y;
-   y = temp;
+   for (int i = 0; i < n; i++)
+   {
+      to[i] = from[i];
+   }
 }
 
 void radixSort(int* array, const int begin, const int end)
@@ -42,29 +39,36 @@ void radixSort(int* array, const int begin, const int end)
    const int size = end - begin;
    const int numDigits = getNumDigits(findMax(array, size));
 
-   // radix sort divides the array into contiguous groups based on digit values
-   // groupIndices stores the ending index, exclusive, of each group
-   // for example, groupIndices[3] = 15 means that the last item in group 3 is
-   // at index 14
-   int groupIndices[10];
+   int* swapArray = new int[size];
    for (int i = 1; i <= numDigits; i++)
    {
       int exp = std::pow(10, i - 1);
 
+      int openIndex = 0;
       for (int j = 0; j < 10; j++)
       {
-         int openIndex = (j > 0) ? groupIndices[j - 1] : 0;
          for (int k = 0; k < size; k++)
          {
             if ((array[k] / exp) % 10 == j)
             {
-               // ERROR by swapping here you break the rule that the order is preserved within each group
-               // TODO need a second array of the same size that you place the groups in, then switch between each array, and in the end, make sure 'array' has the final sorted values
-               swapInts(array[k], array[openIndex]);
+               swapArray[openIndex] = array[k];
                openIndex++;
             } 
          }
-         groupIndices[j] = openIndex;
+      }
+
+      if (i != numDigits || numDigits % 2 == 0)
+      {
+         int* tempPtr = swapArray;
+         swapArray = array;
+         array = tempPtr;
       }
    }
+
+   if (numDigits % 2 != 0)
+   {
+      transferArrayData(swapArray, array, size);
+   }
+
+   delete[] swapArray;
 }
