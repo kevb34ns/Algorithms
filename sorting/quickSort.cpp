@@ -19,7 +19,10 @@ int findPivotIndex(int* array, int begin, int end)
 
 	if (array[end - 1] < array[begin])
 	{
-		swap(array[begin], array[end - 1]);		
+		int temp = array[end - 1];
+		array[end - 1] = array[mid];
+		array[mid] = array[begin];
+		array[begin] = temp;		
 	}
 	else if (array[end - 1] < array[mid])
 	{

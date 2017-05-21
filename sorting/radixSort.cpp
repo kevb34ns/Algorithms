@@ -38,6 +38,7 @@ void radixSort(int* array, const int begin, const int end)
 {
    const int size = end - begin;
    const int numDigits = getNumDigits(findMax(array, size));
+   const bool isEven = numDigits % 2 == 0;
 
    int* swapArray = new int[size];
    for (int i = 1; i <= numDigits; i++)
@@ -57,7 +58,7 @@ void radixSort(int* array, const int begin, const int end)
          }
       }
 
-      if (i != numDigits || numDigits % 2 == 0)
+      if (i != numDigits || isEven)
       {
          int* tempPtr = swapArray;
          swapArray = array;
@@ -65,7 +66,7 @@ void radixSort(int* array, const int begin, const int end)
       }
    }
 
-   if (numDigits % 2 != 0)
+   if (!isEven)
    {
       transferArrayData(swapArray, array, size);
    }
