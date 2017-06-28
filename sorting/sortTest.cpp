@@ -8,6 +8,7 @@
 #include "mergeSort.cpp"
 #include "quickSort.cpp"
 #include "radixSort.cpp"
+#include "heapSort.cpp"
 
 enum SortType
 {
@@ -16,7 +17,8 @@ enum SortType
    insertion,
    merger,
    quick,
-   radix
+   radix,
+   heap
 };
 
 void print(int* array, int size)
@@ -51,8 +53,9 @@ int main(int argc, char** argv)
       -m : use merge sort\n \
       -q : use quick sort\n \
       -r : use radix sort\n \
+      -h : use heap sort\n \
       -p : print sorted list\n \
-      -h : show usage";
+      -u : show usage";
 
    for (int i = 1; i < argc; i++)
    {
@@ -85,10 +88,13 @@ int main(int argc, char** argv)
             case 'r':
                type = radix;
                break;
+            case 'h':
+               type = heap;
+               break;
             case 'p':
                isPrintEnabled = true;
                break;
-            case 'h':
+            case 'u':
             default:
                std::cerr << helpString << std::endl;
                return 0;
@@ -114,6 +120,7 @@ int main(int argc, char** argv)
       case merger: mergeSort(array, 0, N); break;
       case quick: quickSort(array, 0, N); break;
       case radix: radixSort(array, 0, N); break;
+      case heap: heapSort(array, 0, N); break;
       default: delete[] array; return -1;
    }
 
